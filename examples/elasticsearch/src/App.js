@@ -32,6 +32,7 @@ const config = {
   onAutocomplete: async ({ searchTerm }) => {
     const requestBody = buildRequest({ searchTerm });
     const json = await runRequest(requestBody);
+    console.log(json);
     const state = buildState(json);
     return {
       autocompletedResults: state.results
