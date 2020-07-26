@@ -8,7 +8,7 @@ function getTermFilterValue(field, fieldValue) {
     return { [field]: fieldValue === "true" };
   }
 
-  return { [`${field}.keyword`]: fieldValue };
+  return { [`${field}`]: fieldValue };
 }
 
 function getTermFilter(filter) {
@@ -75,7 +75,7 @@ export default function buildRequestFilter(filters) {
   if (!filters) return;
 
   filters = filters.reduce((acc, filter) => {
-    if (["pointOfConsumption", "positions.supplierPartNumber"].includes(filter.field)) {
+    if (["orderType", "customerName","supplierPartNumber"].includes(filter.field)) {
       return [...acc, getTermFilter(filter)];
     }
     if (["acres", "visitors"].includes(filter.field)) {

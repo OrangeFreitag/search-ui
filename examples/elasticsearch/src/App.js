@@ -44,11 +44,12 @@ const config = {
     };
   },
   onSearch: async state => {
-    const { resultsPerPage } = state;
+    const { resultsPerPage} = state;
     const requestBody = buildRequest(state);
     // Note that this could be optimized by running all of these requests
     // at the same time. Kept simple here for clarity.
     const responseJson = await runRequest(requestBody);
+
     return buildState(responseJson, resultsPerPage);
   }
 };
@@ -95,13 +96,19 @@ export default function App() {
                         />
                     )}
                     <Facet
-                        field="positions.pointOfConsumption"
-                        label="Point of Consumption"
+                        field="customerName"
+                        label="Customer Name"
                         filterType="any"
                         isFilterable={true}
                     />
                     <Facet
-                        field="positions.supplierPartNumber"
+                        field="orderType"
+                        label="Order Type"
+                        filterType="any"
+                        isFilterable={true}
+                    />
+                    <Facet
+                        field="supplierPartNumber"
                         label="Supplier Part Number"
                         filterType="any"
                         isFilterable={true}
@@ -110,7 +117,7 @@ export default function App() {
                 }
                 bodyContent={
                   <Results
-                      titleField="id"
+                      titleField="customerName"
                       shouldTrackClickThrough={true}
                   />
                 }

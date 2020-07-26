@@ -12,16 +12,15 @@ function buildSort(sortDirection, sortField) {
 }
 
 function buildMatch(searchTerm) {
-  return searchTerm
-    ? {
-        multi_match: {
-          query: searchTerm,
-          fields: []
+    return searchTerm
+        ? {
+            multi_match: {
+                query: searchTerm,
+                fields: ["*"]
+            }
         }
-      }
-    : { match_all: {} };
+        : { match_all: {} };
 }
-
 /*
 
   Converts current application state to an Elasticsearch request.
@@ -63,13 +62,17 @@ export default function buildRequest(state) {
     highlight: {
       fragment_size: 200,
       number_of_fragments: 1,
-      require_field_match: false,
-      fields : {"*" : {}}
+        fields: {
+            "*" : {}
+        }
     },
     //https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-source-filtering.html#search-request-source-filtering
-
-    /*aggs: {
-    },*/
+      _source: ["id", "customerName", "orderType", "supplierPartNumber"],
+    aggs: {
+        customerName: { terms: { field: "customerName", size: 30} },
+        orderType: { terms: { field: "orderType", size: 30} },
+        supplierPartNumber: { terms: { field: "supplierPartNumber", size: 30} }
+    },
 
     // Dynamic values based on current Search UI state
     // --------------------------

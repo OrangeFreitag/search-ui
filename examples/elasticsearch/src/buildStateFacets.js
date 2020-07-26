@@ -45,10 +45,17 @@ function getValueFacet(aggregations, fieldName) {
 }*/
 
 export default function buildStateFacets(aggregations) {
-  const pointOfConsumption = getValueFacet(aggregations, "pointOfConsumption");
-
+  const plantName = getValueFacet(aggregations, "plantName");
+  const orderType = getValueFacet(aggregations, "orderType");
+  const customerName = getValueFacet(aggregations, "customerName");
+  const supplierPartNumber = getValueFacet(aggregations, "supplierPartNumber");
+  const dates = getValueFacet(aggregations, "dates.freeText");
   const facets = {
-    ...(pointOfConsumption && { pointOfConsumption }),
+    ...(plantName && { plantName }),
+    ...(orderType && { orderType }),
+    ...(customerName && { customerName }),
+    ...(dates && { dates }),
+    ...(supplierPartNumber && { supplierPartNumber })
   };
 
   if (Object.keys(facets).length > 0) {

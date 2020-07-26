@@ -11,7 +11,7 @@ const agent = new https.Agent({
 
 exports.handler = function(event, context, callback) {
   const host = process.env.ELASTICSEARCH_HOST;
- console.log(event.body);
+  console.log(event.body)
   fetch(`${host}/purchaseorders_v1/_search`, {
     method: "POST",
     headers: { "content-type": "application/json" },
